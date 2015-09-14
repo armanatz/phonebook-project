@@ -79,8 +79,6 @@ if ($action=="add") {
     $name=$_POST['name'];
     editName($name,$id);
     $output['msg']="Contact name updated.";
-    //reload the contacts
-    $output['contacts']=getContacts();
     echo json_encode($output);
 } else if ($action=="editPhone") {
     //collect the id we wish to delete
@@ -89,8 +87,6 @@ if ($action=="add") {
     $phone=$_POST['phone'];
     editPhone($phone,$id);
     $output['msg']="Contact phone number updated.";
-    //reload the contacts
-    $output['contacts']=getContacts();
     echo json_encode($output);
 } else {
     $output['contacts']=getContacts();

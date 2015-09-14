@@ -131,9 +131,13 @@
                   return $(this).data('id');
               },
               url: 'phonebook.php',
+              params: {
+                action: 'editName'
+              }
               ajaxOptions: {
                 dataType: 'json',
                 type: 'post',
+                data: 'action=editName&name=' + name + '&id=' + id,
               },
               success: function (j) {
                 //show the notice
