@@ -49,6 +49,8 @@ function setSaveButtonEvent() {
           $('#phone').val('');
           //refresh the address list
           displayAddressList(j.contacts);
+          initXeditName();
+          initXeditPhone();
         }
       });
     }
@@ -79,9 +81,51 @@ function setDeleteButtonEvents() {
           Materialize.toast(j.msg, 4000)
           //refresh the address list
           displayAddressList(j.contacts);
+          initXeditName();
+          initXeditPhone();
         }
       });
     });
+  });
+}
+
+function initXeditName() {
+  $('.name').editable({
+    type: 'text',
+    pk: function () {
+        return $(this).data('id');
+    },
+    params: {
+      action: 'editName',
+    },
+    url: 'phonebook.php',
+    ajaxOptions: {
+      dataType: 'json',
+    },
+    success: function (j) {
+      //show the notice
+      Materialize.toast(j.msg, 4000);
+    }
+  });
+}
+
+function initXeditPhone() {
+  $('.phone').editable({
+    type: 'text',
+    pk: function () {
+        return $(this).data('id');
+    },
+    params: {
+      action: 'editPhone',
+    },
+    url: 'phonebook.php',
+    ajaxOptions: {
+      dataType: 'json',
+    },
+    success: function (j) {
+      //show the notice
+      Materialize.toast(j.msg, 4000);
+    }
   });
 }
 
@@ -103,8 +147,16 @@ $(document).ready(function () {
     success: function (j) {
       //refresh the address list
       displayAddressList(j.contacts);
+      initXeditName();
+      initXeditPhone();
     },
   });
+
+  setTimeout(function() {
+    $.fn.editable.defaults.mode = 'inline';
+    initXeditName();
+    initXeditPhone();
+  },2000)
 
   $('.tooltipped').tooltip({
     delay: 20
