@@ -92,6 +92,7 @@ function setDeleteButtonEvents() {
 function initXeditName() {
   $('.name').editable({
     type: 'text',
+    mode: 'inline',
     pk: function () {
         return $(this).data('id');
     },
@@ -112,6 +113,7 @@ function initXeditName() {
 function initXeditPhone() {
   $('.phone').editable({
     type: 'text',
+    mode: 'inline',
     pk: function () {
         return $(this).data('id');
     },
@@ -153,7 +155,6 @@ $(document).ready(function () {
   });
 
   setTimeout(function() {
-    $.fn.editable.defaults.mode = 'inline';
     initXeditName();
     initXeditPhone();
   },2000)
