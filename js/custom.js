@@ -10,8 +10,8 @@ function displayAddressList(items) {
   //loop thru all the items and add to the list
   var lh = '';
   for (var i = 0; i < items.length; i++) {
-    lh += '<li class="collection-item avatar"><img src="img/no_photo.png" alt="" class="circle"><span class="title" data-id="' +
-      items[i].id + '">' + items[i].full_name + '</span>';
+    lh += '<li class="collection-item avatar"><img src="img/no_photo.png" alt="" class="circle"><span class="title"><a href="#" class="name" data-id="' +
+      items[i].id + '">' + items[i].full_name + '</a></span>';
     lh += '<p data-id="' + items[i].id + '">' + items[i].phone_number + '</p>';
     lh += '<a href="#deleteId" class="secondary-content deletebtn" contactid="' + items[i].id + '"><i class="material-icons red-text text-darken-1">delete</i></a>';
     lh += '</li>';
@@ -104,6 +104,27 @@ $(document).ready(function () {
       //refresh the address list
       displayAddressList(j.contacts);
     },
+  });
+
+  $.fn.editable.defaults.mode = 'inline';
+
+  $('.name').editable({
+    type: 'text',
+    name: 'name',
+    pk: function () {
+        return $(this).data('id');
+    },
+    url: 'phonebook.php',
+    ajaxOptions: {
+      dataType: 'json',
+      type: 'post',
+    },
+    success: function (j) {
+      //show the notice
+      Materialize.toast(j.msg, 4000);
+      //refresh the address list
+      displayAddressList(j.contacts);
+    }
   });
 
   $('.tooltipped').tooltip({

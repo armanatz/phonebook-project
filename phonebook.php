@@ -23,8 +23,16 @@ function deleteContact($id){
   $result=mysql_query($sql);
 }
 
-function editContact($name,$phone,$id) {
-  $sql = "UPDATE contacts SET full_name=".$name."WHERE id=".$id;
+function editName($name,$id) {
+  $sql = "UPDATE contacts SET
+          full_name='".$name."' WHERE id=".$id;
+  $result=mysql_query($sql)or die(mysql_error());
+}
+
+function editPhone($phone,$id) {
+  $sql = "UPDATE contacts SET
+          phone_number='".$phone."' WHERE id=".$id;
+  $result=mysql_query($sql)or die(mysql_error());
 }
 
 //lets get all the contacts
@@ -45,36 +53,49 @@ function getContacts(){
 $action=$_POST['action'];
 
 //the action for now is either add or delete
-if ($action=="add")
-{
-  //get the post variables for the new contact
-  $name=$_POST['name'];
-  $phone=$_POST['phone'];
-  //save the new contact
-  saveContact($name,$phone);
-  $output['msg']=$name." has been saved.";
-  //reload the contacts
-  $output['contacts']=getContacts();
-  echo json_encode($output);
-}
-
-else if ($action=="delete")
-{
-  //collect the id we wish to delete
-  $id=$_POST['id'];
-  //delete the contact with that id
-  deleteContact($id);
-  $output['msg']="Contact deleted.";
-  //reload the contacts
-  $output['contacts']=getContacts();
-  echo json_encode($output);
-}
-
-else
-{
-  $output['contacts']=getContacts();
-  $output['msg']="List of all contacts";
-  echo json_encode($output);
+if ($action=="add") {
+    //get the post variables for the new contact
+    $name=$_POST['name'];
+    $phone=$_POST['phone'];
+    //save the new contact
+    saveContact($name,$phone);
+    $output['msg']=$name." has been saved.";
+    //reload the contacts
+    $output['contacts']=getContacts();
+    echo json_encode($output);
+} else if ($action=="delete") {
+    //collect the id we wish to delete
+    $id=$_POST['id'];
+    //delete the contact with that id
+    deleteContact($id);
+    $output['msg']="Contact deleted.";
+    //reload the contacts
+    $output['contacts']=getContacts();
+    echo json_encode($output);
+} else if ($action=="editName") {
+    //collect the id we wish to delete
+    $id=$_POST['id'];
+    //get the post variables for the new contact
+    $name=$_POST['name'];
+    editName($name,$id);
+    $output['msg']="Contact name updated.";
+    //reload the contacts
+    $output['contacts']=getContacts();
+    echo json_encode($output);
+} else if ($action=="editPhone") {
+    //collect the id we wish to delete
+    $id=$_POST['id'];
+    //get the post variables for the new contact
+    $phone=$_POST['phone'];
+    editPhone($phone,$id);
+    $output['msg']="Contact phone number updated.";
+    //reload the contacts
+    $output['contacts']=getContacts();
+    echo json_encode($output);
+} else {
+    $output['contacts']=getContacts();
+    $output['msg']="List of all contacts";
+    echo json_encode($output);
 }
 
 ?>
