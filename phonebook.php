@@ -25,13 +25,13 @@ function deleteContact($id){
 
 function editName($name,$id) {
   $sql = "UPDATE contacts SET
-          full_name='".$name."' WHERE id=".$id;
+          full_name='".$name."' WHERE id='".$id."'";
   $result=mysql_query($sql)or die(mysql_error());
 }
 
 function editPhone($phone,$id) {
   $sql = "UPDATE contacts SET
-          phone_number='".$phone."' WHERE id=".$id;
+          phone_number='".$phone."' WHERE id='".$id."'";
   $result=mysql_query($sql)or die(mysql_error());
 }
 
