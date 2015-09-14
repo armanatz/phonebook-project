@@ -93,6 +93,7 @@ function initXeditName() {
   $('.name').editable({
     type: 'text',
     mode: 'inline',
+    showbuttons: false,
     pk: function () {
         return $(this).data('id');
     },
@@ -114,6 +115,7 @@ function initXeditPhone() {
   $('.phone').editable({
     type: 'text',
     mode: 'inline',
+    showbuttons: false,
     pk: function () {
         return $(this).data('id');
     },
