@@ -106,28 +106,6 @@ $(document).ready(function () {
     },
   });
 
-    $.fn.editable.defaults.mode = 'inline';
-
-  $('.name').editable({
-    defaults: ($.fn.poshytip) ? $.fn.poshytip.defaults : null,
-    type: 'text',
-    name: 'name',
-    pk: function () {
-        return $(this).data('id');
-    },
-    url: 'phonebook.php',
-    ajaxOptions: {
-      dataType: 'json',
-      type: 'post',
-    },
-    success: function (j) {
-      //show the notice
-      Materialize.toast(j.msg, 4000);
-      //refresh the address list
-      displayAddressList(j.contacts);
-    }
-  });
-
   $('.tooltipped').tooltip({
     delay: 20
   });

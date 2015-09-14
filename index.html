@@ -116,8 +116,34 @@
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
       <!-- Include all compiled plugins (below), or include individual files as needed -->
       <script src="js/materialize.min.js"></script>
-      <script src="js/custom.js"></script>
       <script src="js/jquery-editable-poshytip.js"></script>
+      <script src="js/custom.js"></script>
+      <script>
+        $(document).ready(function () {
+          $.fn.editable.defaults.mode = 'inline';
+
+          $('.name').editable({
+            defaults: ($.fn.poshytip) ? $.fn.poshytip.defaults : null,
+            type: 'text',
+            name: 'name',
+            pk: function () {
+                return $(this).data('id');
+            },
+            url: 'phonebook.php',
+            ajaxOptions: {
+              dataType: 'json',
+              type: 'post',
+            },
+            success: function (j) {
+              //show the notice
+              Materialize.toast(j.msg, 4000);
+              //refresh the address list
+              displayAddressList(j.contacts);
+            }
+          });
+
+        });
+      </script>
     </footer>
 
   </body>
