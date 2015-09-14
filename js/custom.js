@@ -12,7 +12,7 @@ function displayAddressList(items) {
   for (var i = 0; i < items.length; i++) {
     lh += '<li class="collection-item avatar"><img src="img/no_photo.png" alt="" class="circle"><span class="title"><a href="#" class="name" data-id="' +
       items[i].id + '">' + items[i].full_name + '</a></span>';
-    lh += '<p data-id="' + items[i].id + '">' + items[i].phone_number + '</p>';
+    lh += '<p><a href="#" data-id="' + items[i].id + '">' + items[i].phone_number + '</a></p>';
     lh += '<a href="#deleteId" class="secondary-content deletebtn" contactid="' + items[i].id + '"><i class="material-icons red-text text-darken-1">delete</i></a>';
     lh += '</li>';
   }

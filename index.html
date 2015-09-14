@@ -141,6 +141,25 @@
                 Materialize.toast(j.msg, 4000);
               }
             });
+
+            $('.phone').editable({
+              type: 'text',
+              pk: function () {
+                  return $(this).data('id');
+              },
+              params: {
+                action: 'editPhone',
+              },
+              url: 'phonebook.php',
+              ajaxOptions: {
+                dataType: 'json',
+              },
+              success: function (j) {
+                //show the notice
+                Materialize.toast(j.msg, 4000);
+              }
+            });
+
           },2000)
 
         });
