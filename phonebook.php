@@ -74,17 +74,17 @@ if ($action=="add") {
     echo json_encode($output);
 } else if ($action=="editName") {
     //collect the id we wish to delete
-    $id=$_POST['id'];
+    $id=$_POST['pk'];
     //get the post variables for the new contact
-    $name=$_POST['name'];
+    $name=$_POST['value'];
     editName($name,$id);
     $output['msg']="Contact name updated.";
     echo json_encode($output);
 } else if ($action=="editPhone") {
     //collect the id we wish to delete
-    $id=$_POST['id'];
+    $id=$_POST['pk'];
     //get the post variables for the new contact
-    $phone=$_POST['phone'];
+    $phone=$_POST['value'];
     editPhone($phone,$id);
     $output['msg']="Contact phone number updated.";
     echo json_encode($output);
