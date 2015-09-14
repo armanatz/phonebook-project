@@ -124,6 +124,10 @@
           setTimeout(function() {
             $.fn.editable.defaults.mode = 'inline';
 
+            $('.name').on('init', function(e, edt) {
+              edt.options.url = URL + 'action=editName' + edt.options.pk;
+            });
+
             $('.name').editable({
               type: 'text',
               name: 'name',
@@ -131,13 +135,9 @@
                   return $(this).data('id');
               },
               url: 'phonebook.php',
-              params: {
-                action: 'editName'
-              },
               ajaxOptions: {
                 dataType: 'json',
                 type: 'post',
-                data: 'action=editName&name=' + name + '&id=' + pk,
               },
               success: function (j) {
                 //show the notice
