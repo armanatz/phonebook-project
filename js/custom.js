@@ -106,9 +106,10 @@ $(document).ready(function () {
     },
   });
 
-  $.fn.editable.defaults.mode = 'inline';
+    $.fn.editable.defaults.mode = 'inline';
 
   $('.name').editable({
+    defaults: ($.fn.poshytip) ? $.fn.poshytip.defaults : null,
     type: 'text',
     name: 'name',
     pk: function () {
