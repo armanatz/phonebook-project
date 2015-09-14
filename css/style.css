@@ -3,20 +3,16 @@ body {
   min-height: 100vh;
   flex-direction: column;
 }
-
 main {
   flex: 1 0 auto;
   padding-top: 30px;
 }
-
 .nav-content > .brand-logo {
   padding-left: 15px;
 }
-
 .collection .collection-item.avatar p {
   margin-top: 5px;
 }
-
 a.editable {
   color: #333;
 }

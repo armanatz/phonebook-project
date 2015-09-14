@@ -1,13 +1,13 @@
-//global variable to hold client copy of the addresses in the database
+// Global variable to hold client copy of the addresses in the database
 var addresslist = '';
 
-//reload the address list using ajax
+// Reload the address list using AJAX
 function displayAddressList(items) {
-  //empty the contacts lists
+  // Empty the contacts lists
   var list = $('#contactsList');
   //save a client copy of the items array for validation whenever its refreshed from server
   addresslist = items;
-  //loop thru all the items and add to the list
+  // Loop through all the items and add to the list
   var lh = '';
   for (var i = 0; i < items.length; i++) {
     lh += '<li class="collection-item avatar"><img src="img/no_photo.png" alt="" class="circle"><span class="title"><a href="#" class="name" data-id="' +
@@ -17,7 +17,7 @@ function displayAddressList(items) {
     lh += '</li>';
   }
   list.html(lh);
-  //set the delete button event after every reload
+  // Set the delete button event after every reload
   setDeleteButtonEvents()
 }
 
@@ -25,15 +25,14 @@ function displayAddressList(items) {
 function setSaveButtonEvent() {
   $('#saveContactBtn').click(function (e) {
     e.preventDefault();
-    //get the name and phone data
+    // Get the name and phone data
     var name = $('#name').val();
     var phone = $('#phone').val();
-    //validate: ensure the name of phone is not empty, the name and phone not in dbase and
-    //the name has only text and number has only numbers
+    // Validate: Ensure the name or phone is not empty
     if (name == '' || phone == '') {
       Materialize.toast('The name or phone number cannot be empty', 4000)
     } else {
-      //call the ajax save function
+      // Call the AJAX save function
       Materialize.toast('Saving...', 2000);
       $.ajax({
         url: 'phonebook.php',
@@ -42,12 +41,12 @@ function setSaveButtonEvent() {
         type: 'post',
         success: function (j) {
           $('#addContactModal').closeModal();
-          //show the notice
+          // Show success notice
           Materialize.toast(j.msg, 4000);
-          //empty the input fields
+          // Empty the input fields
           $('#name').val('');
           $('#phone').val('');
-          //refresh the address list
+          // Refresh the list and re-initialize X-editable code
           displayAddressList(j.contacts);
           initXeditName();
           initXeditPhone();
@@ -60,18 +59,18 @@ function setSaveButtonEvent() {
 //function to set all delete button events
 function setDeleteButtonEvents() {
   $('.deletebtn').each(function (i) {
-    //set the delete event on each delete button
+    // Set the delete event on each delete button
     $(this).click(function () {
-      //confirm
+      // Alert for confirmation
       var answer = confirm('Are you sure you\'d like to delete this contact?');
       if (!answer) {
         return;
       }
-      //set the delete notice
+      // Set the delete notice
       Materialize.toast('Deleting...', 4000);
-      //get the contactid of the current delete btn
+      // Get the contactid of the current delete button
       var id = $(this).attr('contactid');
-      //call the ajax deleete function
+      // Call the AJAX delete function
       $.ajax({
         url: 'phonebook.php',
         data: 'action=delete&id=' + id,
@@ -79,7 +78,7 @@ function setDeleteButtonEvents() {
         type: 'post',
         success: function (j) {
           Materialize.toast(j.msg, 4000)
-          //refresh the address list
+          // Refresh the list and re-initialize X-editable code
           displayAddressList(j.contacts);
           initXeditName();
           initXeditPhone();
@@ -89,6 +88,7 @@ function setDeleteButtonEvents() {
   });
 }
 
+// X-editable function for inline editing of name
 function initXeditName() {
   $('.name').editable({
     type: 'text',
@@ -105,12 +105,13 @@ function initXeditName() {
       dataType: 'json',
     },
     success: function (j) {
-      //show the notice
+      // Show success notice
       Materialize.toast(j.msg, 4000);
     }
   });
 }
 
+// X-editable function for inline editing of phone number
 function initXeditPhone() {
   $('.phone').editable({
     type: 'text',
@@ -127,7 +128,7 @@ function initXeditPhone() {
       dataType: 'json',
     },
     success: function (j) {
-      //show the notice
+      // Show success notice
       Materialize.toast(j.msg, 4000);
     }
   });
@@ -135,54 +136,33 @@ function initXeditPhone() {
 
 $(document).ready(function () {
 
-  //set all the delete button events
+  // Set all the delete button events
   setDeleteButtonEvents();
 
-  //set the save button event
+  // Set the save button event
   setSaveButtonEvent();
 
-  //load the address list now
-  //call the ajax save function
+  // Load the address list now
+  // Call the AJAX save function
   $.ajax({
     url: 'phonebook.php',
     data: '',
     dataType: 'json',
     type: 'post',
     success: function (j) {
-      //refresh the address list
+      // Refresh the list and re-initialize X-editable code
       displayAddressList(j.contacts);
       initXeditName();
       initXeditPhone();
     },
   });
 
-  setTimeout(function() {
-    initXeditName();
-    initXeditPhone();
-  },2000)
-
+  // Initialize tooltips for FAB
   $('.tooltipped').tooltip({
     delay: 20
   });
 
+  // Initialize add contact modal
   $('.modal-trigger').leanModal();
-
-  //$('#searchIcon').click(function (e) {
-  //  e.preventDefault();
-  //
-  //  $('.nav-content').addClass('hide');
-  //
-  //  if ($('#searchBox').hasClass('hide')) {
-  //    $('#searchBox').removeClass('hide');
-  //    $('#search').focus();
-  //  } else {
-  //    $('#searchBox').addClass('hide');
-  //  }
-  //});
-  //
-  //$('main, footer, #closeSearch').click(function () {
-  //  $('#searchBox').addClass('hide');
-  //  $('.nav-content').removeClass('hide');
-  //});
 
 });
